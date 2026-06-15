@@ -1,0 +1,278 @@
+/* ════════════════════════════════════════
+   REPRESENTATIVES — _representatives.scss
+   ════════════════════════════════════════ */
+
+/* ── HERO ── */
+.repr-hero {
+  padding: 112px 40px 44px;
+  background: var(--bg);
+  border-bottom: var(--border);
+  text-align: center;
+}
+
+
+.repr-hero__title {
+  margin-bottom: 24px;
+}
+
+.repr-hero__sub {
+  font-size: 20px;
+  color: var(--text80);
+  margin: 0;
+}
+
+/* ── ТЕЛО ── */
+.repr-body {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  min-height: calc(100vh - 64px);
+}
+
+/* ── САЙДБАР ── */
+.repr-sidebar {
+  background: var(--bg-card);
+  border-right: var(--border);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 64px;
+  height: calc(100vh - 64px);
+  overflow: hidden;
+}
+
+.repr-sidebar__filter {
+  padding: 14px 24px;
+  border-bottom: var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  background: var(--bg-card2);
+}
+
+.repr-sidebar__filter-label {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+  cursor: pointer;
+  user-select: none;
+}
+
+.repr-sidebar__filter-icon {
+  color: var(--text80);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+
+  &:hover { color: var(--white); }
+}
+
+.repr-sidebar__list {
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100,157,234,0.25) transparent;
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba(100,157,234,0.25); border-radius: 2px; }
+}
+
+/* ── КАРТОЧКА ПРЕДСТАВИТЕЛЯ ── */
+.repr-card {
+  padding: 18px 24px;
+  border-bottom: var(--border);
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-left: 3px solid transparent;
+
+  &:hover { background: var(--bg-card2); }
+
+  &.is-active {
+    background: var(--bg-card2);
+    border-left-color: var(--accent);
+  }
+}
+
+.repr-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.repr-card__name {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  line-height: 1.3;
+
+  svg {
+    color: var(--text);
+    flex-shrink: 0;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+
+  &:hover svg {
+    color: var(--accent);
+    transform: translateX(2px);
+  }
+}
+
+.repr-card__badge {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(100,157,234,0.3);
+  border-radius: var(--border-radius-xs);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.repr-card__row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-bottom: 8px;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+.repr-card__label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text80);
+}
+
+.repr-card__val {
+  font-size: 16px;
+  color: var(--text);
+  line-height: 1.4;
+}
+
+.repr-card__link {
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+/* ── КАРТА ── */
+.repr-map-wrap {
+  position: relative;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+#repr-map {
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+}
+
+.repr-map__locate {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--bg-card);
+  border: var(--border);
+  border-radius: var(--border-radius-s);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--white);
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+
+  svg { color: var(--accent); flex-shrink: 0; }
+
+  &:hover {
+    background: var(--bg-card2);
+    border-color: var(--accent);
+  }
+}
+
+/* Leaflet overrides — dark theme */
+.repr-map-wrap {
+  .leaflet-popup-content-wrapper {
+    background: var(--bg-card);
+    border: var(--border);
+    border-radius: var(--border-radius-s);
+    color: var(--text);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+
+  .leaflet-popup-tip {
+    background: var(--bg-card);
+  }
+
+  .leaflet-popup-content {
+    margin: 14px 16px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .leaflet-popup-close-button {
+    color: var(--text80) !important;
+    &:hover { color: var(--white) !important; }
+  }
+
+  .leaflet-control-zoom a {
+    background: var(--bg-card) !important;
+    border-color: rgba(77,144,254,0.25) !important;
+    color: var(--white) !important;
+
+    &:hover { background: var(--bg-card2) !important; }
+  }
+
+  .leaflet-control-attribution {
+    background: rgba(15,43,69,0.8) !important;
+    color: var(--text80) !important;
+    a { color: var(--accent) !important; }
+  }
+}
+
+/* ── АДАПТИВ ── */
+@media (max-width: 1100px) {
+  .repr-body { grid-template-columns: 320px 1fr; }
+}
+
+@media (max-width: 900px) {
+  .repr-body { grid-template-columns: 1fr; }
+
+  .repr-sidebar {
+    position: static;
+    height: auto;
+    max-height: 45vh;
+    border-right: none;
+    border-bottom: var(--border);
+  }
+
+  #repr-map { min-height: 400px; }
+  .repr-hero__title { font-size: 28px; }
+  .repr-hero { padding: 32px 20px 28px; }
+}
+
+@media (max-width: 600px) {
+  .repr-hero { padding: 24px 16px 20px; }
+  .repr-card,
+  .repr-sidebar__filter { padding-left: 16px; padding-right: 16px; }
+  .repr-map__locate { right: 12px; top: 12px; padding: 8px 14px; font-size: 12px; }
+}

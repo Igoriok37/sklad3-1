@@ -1,0 +1,681 @@
+/* ── Downloads section ── */
+.compl-downloads {
+  background: var(--bg);
+  padding: 56px 80px;
+
+  &__title {
+    
+    margin: 0 0 56px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px 28px 22px;
+    min-height: 110px;
+    background: var(--bg-card);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition:
+      border-color 0.3s ease-in-out,
+      background 0.3s ease-in-out;
+
+    &:hover {
+      border-color: var(--accent);
+      background: var(--bg-card2);
+
+      .compl-downloads__arrow {
+        color: var(--accent);
+        transform: translateX(14px);
+      }
+    }
+  }
+
+  &__card-label {
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.45;
+  }
+
+  &__series {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  &__arrow {
+    align-self: flex-end;
+    width: 28px;
+    height: 28px;
+    color: rgba(77, 144, 254, 0.55);
+    flex-shrink: 0;
+    transition:
+      color 0.3s ease-in-out,
+      transform 0.3s ease-in-out;
+  }
+}
+
+@media (max-width: 767px) {
+  .compl-downloads {
+    padding: 56px 24px;
+
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 1023px) {
+  .compl-hero__content {
+    padding: 0 40px 56px;
+  }
+
+  .compl-stats {
+    grid-template-columns: repeat(2, 1fr);
+
+    &__item {
+      border-bottom: 1px solid rgba(77, 144, 254, 0.1);
+
+      &:nth-child(2) {
+        border-right: none;
+      }
+    }
+  }
+
+  .compl-included {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 72px 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  .compl-hero {
+    min-height: 520px;
+
+    &__content {
+      padding: 0 24px 48px;
+    }
+  }
+
+  .compl-stats {
+    grid-template-columns: 1fr 1fr;
+
+    &__item {
+      padding: 24px 20px;
+    }
+
+    &__value {
+      font-size: 32px;
+    }
+  }
+
+  .compl-included {
+    padding: 56px 24px;
+  }
+
+  .compl-step {
+    grid-template-columns: 36px 24px 1fr;
+  }
+
+  .compl-included__right-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════
+   COMPARE TABLE — секция «Комплектации и цены»
+   ═══════════════════════════════════════════════════ */
+
+.compl-compare {
+  background: var(--bg);
+  padding-top: 112px; // nav 64px + subnav 48px
+
+  // ── Верхняя зона: заголовок + управление ──
+  &__top {
+    padding: 48px 0 0;
+    text-align: center;
+    
+  }
+
+  &__title {
+    padding: 24px 0;
+    margin: 0;
+
+    span {
+      color: var(--accent);
+    }
+  }
+
+  &__controls {
+    position: sticky;
+    top: 108px; // nav 64px + subnav 48px
+    z-index: 40;
+    background: var(--bg);
+    border-bottom: 1px solid rgba(77, 144, 254, 0.1);
+  }
+
+  &__controls-main {
+    max-width: 820px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 32px 16px;
+    margin: 0 auto;
+    gap: 32px;
+  }
+
+  // Ссылки для скачивания
+  &__downloads {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+   
+  }
+
+  &__dl-label {
+    font-size: 32px;
+    color: var(--text);
+    font-weight: 400;
+    white-space: nowrap;
+    margin-left: -200px;
+  }
+
+  &__dl-list {
+    display: flex;
+    align-items: center;
+    gap: 90px;
+  }
+
+  &__dl-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+
+    &:hover {
+      color: var(--white);
+    }
+  }
+
+  &__dl-dot {
+    width: 13px;
+    height: 13px;
+    border-radius: var(--border-radius-xs);
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  // Компактная шапка вариантов — видна только когда __controls залип
+  &__compact-head {
+    display: none;              // скрыта по умолчанию
+    align-items: stretch;
+    gap: 4px;
+  }
+
+  // Когда controls залип — показываем компактную шапку (через класс .is-stuck на controls)
+  // Селектор выведен из блока, чтобы не конфликтовать с BEM-интерполяцией
+
+  // Компактная карточка варианта (только имя + цена, без фото)
+  &__compact-var {
+    flex: 1;
+    min-width: 0;
+    padding: 9px 24px 10px;
+    background: var(--bg-card2);
+    /* border-top: 1px solid transparent; */ // цвет-акцент варианта задаётся inline из JS
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    transition: flex 0.25s ease-in-out;
+
+    // Разделитель между карточками
+    & + & {
+      border-left: 1px solid rgba(77, 144, 254, 0.08);
+    }
+  }
+
+  &__compact-name {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    // цвет задаётся inline из JS
+  }
+
+  &__compact-price {
+    font-size: 16px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // ── Карточки вариантов (НЕ sticky — прокручиваются вместе со страницей) ──
+  &__head {
+    display: flex;              // flex: скрытый __var выпадает, остальные делят место
+    align-items: stretch;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+
+  &__head-spacer {
+    // не используется при текущей компоновке, оставлен для совместимости
+    display: none;
+  }
+
+  &__var {
+    flex: 1;                    // равные доли; при скрытии остальные заполняют
+    min-width: 0;               // предотвращает переполнение flex-item
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    padding: 24px;
+    transition: flex 0.25s ease-in-out; // плавное перераспределение
+  }
+
+  &__var-img-wrap {
+    
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    margin: -24px -24px 0 ;
+  }
+
+  &__var-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    filter: brightness(0.7);
+    transition: filter 0.3s ease-in-out;
+
+    &:hover {
+      filter: brightness(0.9);
+    }
+  }
+
+  &__var-name {
+    font-family: var(--font-head);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    padding: 0;
+    // цвет задаётся через inline-style из JS
+  }
+
+  &__var-price {
+    font-size: 20px;
+    color: var(--text);
+    padding: 0;
+    display: flex;
+    align-items: start;
+    gap: 5px;
+    flex-wrap: wrap;
+    line-height: 2.2;
+
+  }
+
+  &__var-info-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: rgba(222, 232, 245, 0.35);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    transition: color 0.3s ease-in-out;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+
+  // ── Тело таблицы ──
+  &__table {
+    padding-bottom: 80px;
+  }
+
+  // Группа-категория
+  &__group {
+    border-top: var(--border);
+  }
+
+  &__group-hd {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 24px;
+    background: var(--bg-card2);
+    border: none;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.3s ease-in-out;
+
+    &:hover {
+      background: var(--bg-btn);
+    }
+  }
+
+  &__group-arrow {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    stroke: var(--accent);
+    transition: transform 0.3s ease-in-out;
+
+    .compl-compare__group--collapsed & {
+      transform: rotate(-180deg);
+    }
+  }
+
+  // Строка фичи: название сверху на всю ширину, четыре ячейки снизу
+  &__row {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(77, 144, 254, 0.08);
+    transition: background 0.2s ease-in-out;
+
+    &:hover {
+      background: rgba(77, 144, 254, 0.04);
+    }
+
+    &--hidden {
+      display: none;
+    }
+  }
+
+  // Название характеристики — на всю ширину строки
+  &__feat {
+    width: 100%;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.5;
+   
+  }
+
+  // Контейнер четырёх ячеек — flex-ряд под названием
+  &__cells-row {
+    display: flex;
+    align-items: stretch;
+  }
+
+  // Ячейка варианта: flex:1 совпадает с flex:1 карточек в шапке → одинаковая ширина
+  &__cell {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 24px 24px;
+    min-height: 44px;
+    transition: flex 0.25s ease-in-out;
+
+    &:first-child {
+      border-left: none;
+    }
+  }
+
+  &__dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: block;
+    flex-shrink: 0;
+    // цвет задаётся через inline-style из JS
+  }
+
+  &__dash {
+    font-size: 18px;
+    color: rgba(222, 232, 245, 0.15);
+    line-height: 1;
+    user-select: none;
+  }
+}
+
+// ── Тоггл «Показать отличия» ──
+.compl-diff-toggle {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .compl-diff-toggle__track {
+      background: var(--accent);
+      border-color: var(--accent);
+
+      .compl-diff-toggle__knob {
+        transform: translateX(18px);
+        background: var(--white);
+      }
+    }
+  }
+
+  &__track {
+    width: 38px;
+    height: 20px;
+    border-radius: 10px;
+    background: rgba(77, 144, 254, 0.18);
+    border: 1px solid rgba(77, 144, 254, 0.3);
+    position: relative;
+    flex-shrink: 0;
+    transition:
+      background 0.3s ease-in-out,
+      border-color 0.3s ease-in-out;
+  }
+
+  &__knob {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--text80);
+    transition:
+      transform 0.3s ease-in-out,
+      background 0.3s ease-in-out;
+  }
+
+  &__label {
+    font-size: 16px;
+    color: var(--text);
+    user-select: none;
+    white-space: nowrap;
+  }
+}
+
+// ── Чекбоксы выбора вариантов ──
+.compl-compare__vi-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.compl-compare__vi-cb {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+
+  // Когда отмечен — заливаем квадрат цветом варианта и показываем галочку
+  &:checked + .compl-compare__vi-check {
+    background: var(--vi-color, var(--accent));
+    border-color: var(--vi-color, var(--accent));
+
+    svg {
+      opacity: 1;
+    }
+  }
+}
+
+.compl-compare__vi-check {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 2px solid var(--vi-color, var(--accent));
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition:
+    background 0.3s ease-in-out,
+    border-color 0.3s ease-in-out;
+
+  svg {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    flex-shrink: 0;
+  }
+}
+
+// ── Компактная шапка: показывается когда .compl-compare__controls залипает ──
+.compl-compare__controls.is-stuck .compl-compare__compact-head {
+  display: flex;
+  animation: compactHeadIn 0.25s ease-out both;
+}
+
+@keyframes compactHeadIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* .compl-compare__vi-label {
+  font-size: 14px;
+  color: var(--text);
+}
+ */
+.compl-compare__vi-label {
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  transition: color 0.3s ease-in-out;
+
+  .compl-compare__vi-toggle:hover & {
+    color: var(--white);
+  }
+}
+
+// ── Адаптив ──
+@media (max-width: 1023px) {
+  .compl-compare {
+    &__top {
+      padding: 40px 40px 28px;
+    }
+
+    &__controls {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    &__group-hd {
+      padding: 14px 40px;
+    }
+
+    &__feat {
+      padding: 12px 16px 12px 40px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .compl-compare {
+    padding-top: 104px;
+
+    &__top {
+      padding: 28px 24px 20px;
+      text-align: left;
+    }
+
+    &__controls {
+      gap: 12px;
+    }
+
+    &__downloads {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    &__dl-list {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    &__head {
+      top: 104px;
+      grid-template-columns: 1.4fr repeat(4, 1fr);
+    }
+
+    &__var-name {
+      font-size: 10px;
+      padding: 6px 6px 2px;
+    }
+
+    &__var-price {
+      font-size: 9px;
+      padding: 0 6px 8px;
+    }
+
+    &__var-info-btn {
+      display: none;
+    }
+
+    &__group-hd {
+      padding: 12px 24px;
+      font-size: 13px;
+    }
+
+    &__feat {
+      padding: 10px 10px 10px 24px;
+      font-size: 11px;
+    }
+
+    &__dot {
+      width: 8px;
+      height: 8px;
+    }
+
+    &__dash {
+      font-size: 14px;
+    }
+  }
+}

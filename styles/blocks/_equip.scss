@@ -1,0 +1,361 @@
+/* ── Hero ── */
+.equip-hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+    }
+  }
+
+  &__photo {
+    width: 100%;
+    height: 70vh;
+    object-fit: cover;
+    display: block;
+    position: relative;
+  }
+
+  &__content {
+    position: absolute;
+    z-index: 1;
+    padding: 0 80px 72px;
+    top: 250px;
+    left: 300px;
+    max-width: 1000px;
+  }
+
+  &__title {
+    margin-bottom: 16px;
+    line-height: 1.3;
+    text-transform: initial;
+  }
+}
+
+
+/* ── About model section ── */
+.equip-service {
+  background: var(--bg);
+  padding: 112px 0 56px;
+
+  // Верхний центрированный блок — заголовок + описание
+  &__intro {
+    text-align: center;
+    padding: 112px 80px 72px;
+    max-width: 800px;
+    margin: 0 auto;
+
+    .section-title {
+      margin-bottom: 20px;
+    }
+  }
+
+  &__desc {
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--text);
+  }
+
+  // Нижний блок: фото на всю ширину, панель с фичами — абсолютно в правом нижнем углу
+  &__split {
+    display: flex;
+    align-items: center;
+  }
+
+  &__photo {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+      object-position: bottom;
+      display: block;
+      transition: opacity 0.35s ease-in-out;
+
+      &.is-switching {
+        opacity: 0;
+      }
+    }
+  }
+
+  // Панель — правый нижний угол
+  &__features {
+    flex-shrink: 0;
+    width: 37%;
+    max-height: 600px;
+    overflow-y: auto;
+    background: var(--bg);
+    backdrop-filter: blur(12px);
+    padding: 20px 160px 32px;
+
+    // Тонкий скролл — webkit не поддерживает opacity на thumb, используем rgba
+    scrollbar-width: thin;
+    scrollbar-color: rgba(77, 144, 254, 0.5) transparent;
+
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(77, 144, 254, 0.5);
+      border-radius: var(--border-radius-xs);
+    }
+  }
+
+  &__feat-title {
+    font-family: var(--font-head);
+    font-size: clamp(20px, 2vw, 32px);
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  &__feat-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__feat-item {
+    padding: 12px 0 12px 18px;
+    border-left: 3px solid rgba(77, 144, 254, 0.18);
+    
+    cursor: pointer;
+    transition: border-left-color 0.3s ease-in-out;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    // Открытый пункт — синяя граница (max-height задаётся через JS по реальной высоте)
+    &.is-open {
+      border-left-color: var(--accent);
+
+      .equip-service__feat-desc {
+        opacity: 1;
+        margin-top: 8px;
+      }
+
+      .equip-service__feat-name {
+        color: var(--white);
+      }
+    }
+  }
+
+  &__feat-name {
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text80);
+
+    line-height: 1.3;
+    user-select: none;
+  }
+
+  // Скрыто по умолчанию, плавно раскрывается через max-height
+  &__feat-desc {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.3;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    transition:
+      max-height 0.3s ease-in-out,
+      opacity 0.3s ease-in-out,
+      margin-top 0.3s ease-in-out;
+  }
+}
+
+@media (max-width: 1023px) {
+  .equip-service {
+    &__intro {
+      padding: 72px 40px 56px;
+    }
+
+    // На планшете панель занимает больше ширины
+    &__features {
+      width: 56%;
+      max-height: 360px;
+      padding: 32px 32px 24px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .equip-service {
+    &__intro {
+      padding: 56px 24px 40px;
+    }
+
+    &__split {
+      min-height: 300px;
+    }
+
+    // На мобиле — панель выходит из absolute, идёт под фото статично
+    &__features {
+      position: static;
+      width: 100%;
+      max-height: none;
+      overflow-y: visible;
+      border-left: none;
+      padding: 32px 24px;
+      backdrop-filter: none;
+      background: var(--bg-card);
+    }
+  }
+}
+
+.equip-service-left {
+  padding: 56px 0;
+}
+
+/* ── equip-product: зеркальная секция (список слева, фото справа) ── */
+.equip-product {
+  background: var(--bg);
+  padding: 56px 0 112px;
+
+  &__split {
+    display: flex;
+    align-items: center;
+  }
+
+  &__photo {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: opacity 0.35s ease-in-out;
+
+      &.is-switching {
+        opacity: 0;
+      }
+    }
+  }
+
+  &__features {
+    flex-shrink: 0;
+    width: 37%;
+    max-height: 600px;
+    overflow-y: auto;
+    background: var(--bg);
+    padding: 20px 160px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(77, 144, 254, 0.5) transparent;
+
+    &::-webkit-scrollbar { width: 3px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(77, 144, 254, 0.5);
+      border-radius: 2px;
+    }
+  }
+
+  &__feat-title {
+    font-family: var(--font-head);
+    font-size: clamp(20px, 2vw, 32px);
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 28px;
+    line-height: 1.2;
+  }
+
+  &__feat-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__feat-item {
+    padding: 12px 0 12px 18px;
+    border-left: 3px solid rgba(77, 144, 254, 0.18);
+    cursor: pointer;
+    transition: border-left-color 0.3s ease-in-out;
+
+    &:last-child { border-bottom: none; }
+
+    &.is-open {
+      border-left-color: var(--accent);
+
+      .equip-product__feat-desc {
+        opacity: 1;
+        margin-top: 8px;
+      }
+
+      .equip-product__feat-name {
+        color: var(--white);
+      }
+    }
+  }
+
+  &__feat-name {
+    font-family: var(--font-body);
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text80);
+    line-height: 1.3;
+    user-select: none;
+  }
+
+  &__feat-desc {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1.3;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    transition:
+      max-height 0.3s ease-in-out,
+      opacity 0.3s ease-in-out,
+      margin-top 0.3s ease-in-out;
+  }
+}
+
+
+
+
+
+/* ── Responsive ── */
+@media (max-width: 1023px) {
+  .equip-hero__content {
+    padding: 0 40px 56px;
+  }
+}
+
+@media (max-width: 767px) {
+  .equip-hero {
+    min-height: 520px;
+
+    &__content {
+      padding: 0 24px 48px;
+    }
+  }
+}

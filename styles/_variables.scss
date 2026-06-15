@@ -1,0 +1,43 @@
+:root {
+  --accent: #649dea;
+  --accent-dim: #2a6bb8;
+  --accent-dim2: rgba(100, 157, 234, 0.2);
+  --accent-dim3: rgba(100, 157, 234, 0.3);
+
+  --bg: #0F2B45;
+  --bg-card: #112e4a;
+  --bg-card2: #153453;
+  --bg-card3: #1f3e5d;
+  --bg-btn: rgba(77, 144, 254, 0.12);
+  --bg-active: rgba(77, 144, 254, 0.2);
+
+  --text: #dee8f5;
+  --text80: rgba(222,232,245,0.8);
+
+  --white: #fff;
+  --black: #000;
+
+  /* CTA-баннер (светлая тема) */
+  --cta-bg:     #e4e9f0;
+  --cta-text:   #1a3550;
+  --cta-accent: #2c63ac;
+
+  /* Жёлтый (process, cta-strip) */
+  --yellow: #f5b800;
+
+  /* Конфигуратор — цвета вариантов */
+  --cfg-color-a: #6ab4f5;
+  --cfg-color-b: #b494f0;
+
+  --border: 1px solid rgba(77, 144, 254, 0.25);
+  --border-btn: 1px solid rgba(77, 144, 254, 0.35);
+ 
+
+  --border-radius: 12px;
+  --border-radius-s: 6px;
+  --border-radius-xs: 4px;
+
+  --font-head: 'Circe', sans-serif;
+  --font-body: 'Circe', sans-serif;
+}
+

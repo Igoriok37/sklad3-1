@@ -1,0 +1,98 @@
+/* ════════════════════════════════════════
+   SUBNAV — общий субнав для страниц модели
+   Используется на: sklad, specs, equipment, complete, configurator
+   ════════════════════════════════════════ */
+
+// Полоса фиксируется сразу под основным хедером (top: 64px)
+// и визуально является его нижней частью — те же цвет и стекло.
+.subnav {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  z-index: 90; // чуть ниже хедера (100), но выше контента
+
+  background: rgba(15, 43, 69, 0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(77, 144, 254, 0.15);
+
+  &__list {
+    display: flex;
+    align-items: stretch;
+    list-style: none;
+    margin: 0;
+    padding: 0 24px;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__item {
+    flex-shrink: 0;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px 14px 0;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+    text-decoration: none;
+    white-space: nowrap;
+    position: relative;
+    transition: color 0.3s ease-in-out;
+
+    // Подчёркивание-индикатор активного пункта
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 20px;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    &:hover {
+      color: var(--white);
+    }
+
+    &.is-active {
+      color: var(--accent);
+
+      &::after {
+        transform: scaleX(1);
+      }
+    }
+  }
+}
+
+// Секции-якоря: отступ сверху = хедер (64px) + субнав (~48px) + зазор
+.subnav-target {
+  scroll-margin-top: 124px;
+}
+
+@media (max-width: 767px) {
+  .subnav {
+    top: 56px;
+
+    &__link {
+      padding: 12px 14px;
+      font-size: 10px;
+      
+    }
+  }
+
+  .subnav-target {
+    scroll-margin-top: 108px;
+  }
+}

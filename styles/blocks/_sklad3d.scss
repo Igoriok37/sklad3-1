@@ -1,0 +1,471 @@
+/* ════════════════════════════════════════
+   СЕКЦИЯ 3D НА ГЛАВНОЙ СТРАНИЦЕ
+   ════════════════════════════════════════ */
+   #sklad3d {
+    background: #0f2b45;
+  }
+  
+  .sklad3d-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .sklad3d-header p {
+    font-size: 20px;
+  }
+  
+  /* ── Вьюер ── */
+  .sklad3d-viewer {
+    position: relative;
+    
+    overflow: hidden;
+    /* border: var(--border); */
+    background: var(--bg); /* совпадает с первым свотчем «Ночь» */
+    aspect-ratio: 2.5 / 1;
+    height: 60vh;
+  
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  }
+  
+  .sklad3d-hint {
+    position: absolute;
+    bottom: 50px;
+    left: 85%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 36px;
+    background: var(--accent);
+    border: var(--border-radius-s);
+  
+    font-size: 20px;
+    color: #0f2b45;
+    pointer-events: none;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+    transition: opacity 0.6s ease;
+  
+    &.is-hidden {
+      opacity: 1;
+    }
+  }
+  
+  /* ── Панель справа ── */
+  .sklad3d-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding-top: 8px;
+  }
+  
+  /* ── Цвет стен ── */
+  .sklad3d-colors {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .sklad3d-colors-labels {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .sklad3d-colors-label {
+    font-size: 14px;
+    font-weight: 400;
+    
+    color: var(--text);
+    margin-bottom: 12px;
+  }
+  
+  .sklad3d-swatches {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .sklad3d-swatch {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  
+    &:hover {
+      transform: scale(1.15);
+    }
+  
+    &.is-selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(100, 157, 234, 0.25);
+      transform: scale(1.15);
+    }
+  }
+  
+  .sklad3d-color-name {
+    font-size: 14px;
+    color: var(--text);
+    min-height: 20px;
+  }
+  
+  /* ── Фон сцены ── */
+  .sklad3d-bg-picker {
+    border: var(--border);
+    border-radius: var(--border-radius-s);
+    padding: 12px 16px;
+    background: var(--bg-card);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  /* ── CTA ── */
+  .sklad3d-cta {
+    display: flex;
+  
+    gap: 10px;
+  
+    .btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+  
+  /* ── Шаги сборки ── */
+  .sklad3d-steps {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  
+  .sklad3d-step {
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-xs);
+    transition: border-color 0.2s ease;
+    position: relative;
+  
+    &.is-active {
+      border-color: var(--accent);
+  
+      .sklad3d-step-num {
+        background: var(--accent);
+        color: #0f2b45;
+        border-color: var(--accent);
+      }
+      .sklad3d-step-icon {
+        opacity: 1;
+        color: var(--accent);
+      }
+      .sklad3d-step-body {
+        position: absolute;
+        top: -80px;
+        left: 0;
+        width: 250px;
+        height: 200px;
+        padding: 10px 10px 66px;
+        opacity: 1;
+      }
+    }
+  }
+  
+  .sklad3d-step-header {
+    width: 100%;
+    display: flex;
+    gap: 14px;
+    padding: 14px 16px;
+    text-align: left;
+  }
+  
+  .sklad3d-step-num {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text80);
+    flex-shrink: 0;
+    transition:
+      background 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+  }
+  
+  .sklad3d-step-name {
+    font-size: 15px;
+    color: var(--white);
+    font-weight: 400;
+    flex: 1;
+  }
+  
+  .sklad3d-step-icon {
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  /* Тело шага (раскрывается при is-active) */
+  .sklad3d-step-body {
+    max-height: 0;
+    overflow: hidden;
+    position: absolute;
+    top: -80px;
+    left: 0;
+    width: 250px;
+    height: 200px;
+    padding: 10px 10px 66px;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+    background: transparent;
+  }
+  
+  
+  
+  /* ══ АДАПТИВ СЕКЦИИ 3D (главная страница) ══ */
+  
+  /* ── 1280px ── */
+  @media (max-width: 1280px) {
+    .sklad3d-viewer {
+      height: 50vh;
+    }
+    .sklad3d-inner {
+      gap: 36px;
+    }
+    .sklad3d-header p {
+      font-size: 18px;
+    }
+  
+    .sklad3d-steps {
+      gap: 0;
+    }
+  
+    .sklad3d-hint {
+      left: 80%;
+      bottom: 0;
+    }
+  }
+  
+  /* ── 1024px ── */
+  @media (max-width: 1024px) {
+    .sklad3d-viewer {
+      height: 400px;
+      min-height: 280px;
+      aspect-ratio: 2/1;
+    }
+    .sklad3d-steps {
+      gap: 0;
+    }
+    /* 7 шагов → 3+3+1 */
+    .sklad3d-step-header {
+      gap: 8px;
+      padding: 6px;
+    }
+    .sklad3d-step-name {
+      font-size: 13px;
+    }
+    .sklad3d-inner {
+      gap: 32px;
+    }
+  
+    .sklad3d-hint {
+      left: 76%;
+      bottom: 0;
+    }
+  
+    .sklad3d-step-body {
+      top: -80px;
+      left: -60px;
+      width: 250px;
+      height: 90px;
+      padding: 10px 10px 66px;
+    }
+    
+  
+    .sklad3d-step.is-active .sklad3d-step-body {
+      top: -80px;
+      left: -60px;
+      width: 250px;
+      height: 90px;
+      padding: 10px 10px 66px;
+    }
+  
+    
+  }
+  
+  /* ── 768px ── */
+  @media (max-width: 768px) {
+    .sklad3d-viewer {
+      height: 38vh;
+      min-height: 220px;
+      aspect-ratio: 1.5/1;
+    }
+    .sklad3d-inner {
+      gap: 24px;
+    }
+    .sklad3d-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    /* 7 шагов → 2 в ряд */
+    .sklad3d-step {
+      flex: 0 0 calc(30% - 4px);
+    }
+    .sklad3d-step-header {
+      padding: 10px 12px;
+      gap: 10px;
+    }
+    .sklad3d-step-name {
+      font-size: 12px;
+    }
+    .sklad3d-step-num {
+      width: 24px;
+      height: 24px;
+      font-size: 11px;
+    }
+    /* CTA — кнопки в столбик */
+    .sklad3d-cta {
+      flex-direction: column;
+      gap: 10px;
+      .btn {
+        width: 100%;
+      }
+    }
+ 
+  
+    .sklad3d-hint {
+      bottom: 0px;
+      left: 43%;
+      transform: translateX(0%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 40px;
+      background: var(--accent);
+      border: var(--border-radius-s);
+      font-size: 16px;
+      color: #0f2b45;
+      pointer-events: none;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+      transition: opacity 0.6s ease;
+    }
+  
+    .sklad3d-step-body {
+      top: -160px;
+      left: 190px;
+      display: flex;
+      gap: 12px;
+      width: 80px;
+      height: 0px;
+      padding: 10px 10px 120px;
+    }
+    
+  
+    .sklad3d-step.is-active .sklad3d-step-body {
+      top: -160px;
+      left: 190px;
+      display: flex;
+      gap: 12px;
+      width: 80px;
+      height: 250px;
+      padding: 10px 10px 120px;
+    }
+  
+    .sklad3d-colors-labels {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+    }
+  
+    .sklad3d-swatches {
+      display: block;
+      flex-direction: column;
+      order: -1;
+    }
+    
+    .sklad3d-swatch {
+      width: 20px;
+      height: 20px;
+      margin-bottom: 4px;
+    }
+  }
+  
+  /* ── 480px ── */
+  @media (max-width: 480px) {
+    .sklad3d-viewer {
+      height: 34vh;
+      min-height: 350px;
+      aspect-ratio: 1/1;
+    }
+    .sklad3d-inner {
+      gap: 20px;
+    }
+  
+    .sklad3d-hint {
+      bottom: 0px;
+      left: 28%;
+      font-size: 14px;
+      padding: 10px 14px;
+    }
+  
+    .sklad3d-step-body {
+      top: -160px;
+      left: 190px;
+      display: flex;
+      gap: 12px;
+      width: 80px;
+      height: 0px;
+      padding: 10px 10px 120px;
+    }
+    
+  
+    .sklad3d-step.is-active .sklad3d-step-body {
+      top: -178px;
+      left: -13px;
+      display: flex;
+      gap: 12px;
+      width: 80px;
+      height: 250px;
+      padding: 10px 10px 120px;
+    }
+    .sklad3d-steps {
+      gap: 6px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .sklad3d-step-header {
+      padding: 8px 10px;
+      gap: 8px;
+    }
+    .sklad3d-step-name {
+      font-size: 11px;
+    }
+    .sklad3d-step-num {
+      width: 20px;
+      height: 20px;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+   
+  }
+  

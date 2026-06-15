@@ -1,0 +1,310 @@
+﻿/* ── HERO SLIDER ── */
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-track {
+  display: flex; /* Выстраивает слайды в ряд */
+  width: 700%; /* 100% * количество слайдов */
+  height: 100%;
+  transform: translateX(0);
+}
+
+.slide {
+  position: relative;
+  width: 100vw;
+  height: 100vh; /* Высота на весь экран */
+  overflow: hidden;
+}
+
+.slide-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: -1;
+  filter: brightness(0.7);
+}
+
+.slide-content {
+  position: absolute;
+  bottom: 220px;
+  left: 160px;
+  max-width: 1000px;
+  z-index: 5;
+}
+
+.slide-tag {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--bg);
+  border: 1px solid rgba(77, 144, 254, 0.5);
+  border-radius: var(--border-radius-s);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 8px 14px 4px;
+  margin-bottom: 20px;
+  font-family: var(--font-body);
+}
+
+.hero-title {
+  font-family: var(--font-head);
+  font-size: clamp(56px, 9vw, 80px);
+  line-height: 1;
+  font-weight: 600;
+  color: var(--white);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 48px rgba(0, 0, 0, 0.7);
+}
+
+.slide-sub {
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 36px;
+}
+
+.slide-price {
+  font-family: var(--font-body);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 32px;
+}
+.slide-price span {
+  font-size: 14px;
+  color: var(--text80);
+  font-weight: 400;
+}
+
+.slide-btns {
+  display: flex;
+  gap: 16px;
+}
+
+
+.hero-tabs {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  z-index: 10;
+  width: 100%;
+  padding: 0;
+}
+
+.hero-tab {
+  flex: 1;
+  background: rgba(15, 43, 69, 0.4);
+  backdrop-filter: blur(20px);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  color: var(--text);
+  transition: color 0.3s ease-in-out;
+  box-sizing: content-box;
+}
+
+.hero-tab.active {
+  color: var(--white);
+  background: var(--bg);
+}
+
+.tab-title {
+  display: block;
+  padding: 0 24px;
+  font-size: 24px;
+  line-height: 1;
+  margin-top: 24px;
+  margin-bottom: 4px;
+  font-weight: 400;
+}
+
+.tab-subtitle {
+  display: block;
+  padding: 0 24px;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1;
+  margin-bottom: 24px;
+}
+
+.tab-progress-bar {
+  height: 4px;
+  background: transparent;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%; /* Будет меняться через JS или анимацию */
+  background: var(--accent);
+}
+
+.hero-tab.active .tab-progress-fill {
+  width: 100%;
+  transition: width 5s linear; /* Время показа слайда */
+}
+
+/* ── МОБИЛЬНАЯ НАВИГАЦИЯ ── */
+
+/* Контейнер скрыт на десктопе — показывается только на мобилке */
+.hero-mobile-nav {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 11;
+  pointer-events: none; /* чтобы не перекрывать контент */
+}
+
+/* Точки пагинации */
+.hero-mobile-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-bottom: 24px;
+  pointer-events: auto;
+}
+
+.hero-mobile-dot {
+  border: none !important;
+  width: 4px;
+  height: 4px;
+  border-radius: 100px;
+  background: var(--text80);
+  cursor: pointer;
+  transition:
+    width 0.3s ease,
+    background 0.3s ease;
+  flex-shrink: 0;
+}
+
+.hero-mobile-dot.is-active {
+  width: 56px;
+  background: var(--text80);
+}
+
+/* Прогресс-бар — тонкая полоска в самом низу героя */
+.hero-mobile-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.hero-mobile-progress__fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  /* Анимация запускается через JS — transition добавляется динамически */
+}
+
+/* ── АДАПТИВ ── */
+
+@media (max-width: 1280px) {
+  .slide-content {
+    left: 80px;
+    bottom: 200px;
+  }
+  .hero-nav {
+    left: 40px;
+  }
+  .hero-counter {
+    right: 40px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .slide-content {
+    left: 40px;
+    bottom: 160px;
+    max-width: 680px;
+  }
+  .hero-title {
+    font-size: clamp(40px, 7vw, 64px);
+  }
+  .slide-sub {
+    font-size: 24px;
+    margin-bottom: 28px;
+  }
+  .slide-price {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+  .btn-primary,
+  .btn-outline {
+    font-size: 16px;
+    padding: 12px 28px;
+  }
+  .hero-nav {
+    left: 40px;
+  }
+  .hero-counter {
+    right: 40px;
+  }
+  .tab-title {
+    font-size: 18px;
+    margin-top: 16px;
+    margin-bottom: 4px;
+    padding: 0 16px;
+  }
+  .tab-subtitle {
+    font-size: 13px;
+    margin-bottom: 16px;
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .slide-content {
+    left: 20px;
+    bottom: 60px;
+    max-width: calc(100vw - 40px);
+  }
+  .hero-title {
+    font-size: clamp(28px, 8vw, 48px);
+    margin-bottom: 12px;
+  }
+  .slide-sub {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  .slide-price {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  .slide-btns {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  /* Скрываем десктопные элементы навигации */
+  .hero-tabs   { display: none !important; }
+  .hero-nav    { display: none; }
+  .hero-counter { display: none; }
+
+  /* Показываем мобильную навигацию */
+  .hero-mobile-nav { display: block; }
+}
+
+
